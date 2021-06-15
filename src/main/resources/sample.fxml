@@ -1,0 +1,151 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<?import com.jfoenix.controls.JFXListView?>
+<?import com.jfoenix.controls.JFXTextField?>
+<?import javafx.geometry.Insets?>
+<?import javafx.scene.control.Button?>
+<?import javafx.scene.control.ComboBox?>
+<?import javafx.scene.control.Label?>
+<?import javafx.scene.control.Separator?>
+<?import javafx.scene.image.Image?>
+<?import javafx.scene.image.ImageView?>
+<?import javafx.scene.layout.AnchorPane?>
+<?import javafx.scene.layout.HBox?>
+<?import javafx.scene.text.Font?>
+
+<AnchorPane maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="527.0" prefWidth="470.0" style="-fx-background-color: transparent;" xmlns="http://javafx.com/javafx/8.0.171" xmlns:fx="http://javafx.com/fxml/1" fx:controller="sample.Controller">
+   <children>
+      <AnchorPane fx:id="userPane" prefHeight="68.0" prefWidth="600.0" style="-fx-background-color: #2d3240;" AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="0.0" AnchorPane.topAnchor="0.0">
+         <children>
+            <HBox prefHeight="100.0" prefWidth="200.0" AnchorPane.bottomAnchor="0.0" AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="0.0" AnchorPane.topAnchor="0.0">
+               <children>
+                  <ImageView fitHeight="35.0" fitWidth="35.0" onMouseClicked="#onCollectionButtonClicked" pickOnBounds="true" preserveRatio="true">
+                     <image>
+                        <Image url="@images/icon_collection.png" />
+                     </image>
+                     <HBox.margin>
+                        <Insets left="15.0" top="15.0" />
+                     </HBox.margin>
+                  </ImageView>
+                  <ImageView fitHeight="35.0" fitWidth="35.0" onMouseClicked="#onNewVinylButtonClicked" pickOnBounds="true" preserveRatio="true">
+                     <image>
+                        <Image url="@images/icon_vinyl.png" />
+                     </image>
+                     <HBox.margin>
+                        <Insets left="15.0" top="15.0" />
+                     </HBox.margin>
+                  </ImageView>
+                  <ImageView fitHeight="35.0" fitWidth="35.0" onMouseClicked="#onSearchButtonClicked" pickOnBounds="true" preserveRatio="true">
+                     <image>
+                        <Image url="@images/icon_search.png" />
+                     </image>
+                     <HBox.margin>
+                        <Insets left="15.0" top="15.0" />
+                     </HBox.margin>
+                  </ImageView>
+                  <Separator prefWidth="375.0" visible="false" />
+                  <ImageView fitHeight="35.0" fitWidth="35.0" onMouseClicked="#onExitButtonClicked" pickOnBounds="true" preserveRatio="true">
+                     <image>
+                        <Image url="@images/icon_exit.png" />
+                     </image>
+                     <HBox.margin>
+                        <Insets right="5.0" top="15.0" />
+                     </HBox.margin>
+                  </ImageView>
+               </children>
+            </HBox>
+         </children>
+      </AnchorPane>
+      <AnchorPane fx:id="newVinylPane" layoutX="10.0" layoutY="78.0" prefHeight="440.0" prefWidth="470.0" style="-fx-background-color: #2d3240;" visible="false" AnchorPane.bottomAnchor="0.0" AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="0.0" AnchorPane.topAnchor="87.0">
+         <children>
+            <JFXTextField fx:id="txtAuthor" layoutX="156.0" layoutY="72.0" prefHeight="25.0" prefWidth="263.0" promptText="Introduce el nombre del artista" style="-fx-text-fill: #4059a9;" />
+            <JFXTextField fx:id="txtTittle" layoutX="159.0" layoutY="136.0" prefHeight="25.0" prefWidth="263.0" promptText="Introduce el titulo del disco" style="-fx-text-fill: #4059a9;" />
+            <JFXTextField fx:id="txtStyle" layoutX="156.0" layoutY="208.0" prefHeight="25.0" prefWidth="263.0" promptText="Introduce el estilo musical" style="-fx-text-fill: #4059a9;" />
+            <Label layoutX="37.0" layoutY="72.0" text="Artista:" textFill="WHITE">
+               <font>
+                  <Font name="System Bold" size="16.0" />
+               </font>
+            </Label>
+            <Label layoutX="37.0" layoutY="136.0" text="Titulo:" textFill="WHITE">
+               <font>
+                  <Font name="System Bold" size="16.0" />
+               </font>
+            </Label>
+            <Label layoutX="37.0" layoutY="208.0" text="Estilo:" textFill="WHITE">
+               <font>
+                  <Font name="System Bold" size="16.0" />
+               </font>
+            </Label>
+            <Label layoutX="38.0" layoutY="276.0" text="Estado:" textFill="WHITE">
+               <font>
+                  <Font name="System Bold" size="16.0" />
+               </font>
+            </Label>
+            <ComboBox fx:id="comboBoxState" layoutX="156.0" layoutY="276.0" prefWidth="150.0" promptText="Selecciona el estado" />
+            <Separator layoutX="28.0" layoutY="331.0" opacity="0.3" prefHeight="3.0" prefWidth="421.0">
+               <opaqueInsets>
+                  <Insets />
+               </opaqueInsets>
+            </Separator>
+            <Button layoutX="38.0" layoutY="369.0" mnemonicParsing="false" onMouseClicked="#insertVinyl" prefHeight="25.0" prefWidth="122.0" text="Guardar" />
+         </children>
+      </AnchorPane>
+      <ImageView fx:id="newVinylArrow" fitHeight="23.0" fitWidth="35.0" layoutX="64.0" layoutY="59.0" pickOnBounds="true" preserveRatio="true" visible="false">
+         <image>
+            <Image url="@images/icon_arrow.png" />
+         </image>
+      </ImageView>
+      <ImageView fx:id="exitArrow" fitHeight="23.0" fitWidth="35.0" layoutX="421.0" layoutY="59.0" pickOnBounds="true" preserveRatio="true" visible="false" AnchorPane.rightAnchor="5.0">
+         <image>
+            <Image url="@images/icon_arrow.png" />
+         </image>
+      </ImageView>
+      <ImageView fx:id="collectionArrow" fitHeight="23.0" fitWidth="35.0" layoutX="15.0" layoutY="59.0" pickOnBounds="true" preserveRatio="true">
+         <image>
+            <Image url="@images/icon_arrow.png" />
+         </image>
+      </ImageView>
+      <AnchorPane fx:id="searchPane" layoutX="20.0" layoutY="88.0" prefHeight="440.0" prefWidth="470.0" style="-fx-background-color: #2d3240;" visible="false" AnchorPane.bottomAnchor="0.0" AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="0.0" AnchorPane.topAnchor="87.0">
+         <children>
+            <Label layoutX="37.0" layoutY="72.0" text="Autor:" textFill="WHITE">
+               <font>
+                  <Font name="System Bold" size="16.0" />
+               </font>
+            </Label>
+            <Label layoutX="37.0" layoutY="136.0" text="Titulo:" textFill="WHITE">
+               <font>
+                  <Font name="System Bold" size="16.0" />
+               </font>
+            </Label>
+            <Label layoutX="37.0" layoutY="208.0" text="Estilo:" textFill="WHITE">
+               <font>
+                  <Font name="System Bold" size="16.0" />
+               </font>
+            </Label>
+            <Label layoutX="38.0" layoutY="276.0" text="Estado:" textFill="WHITE">
+               <font>
+                  <Font name="System Bold" size="16.0" />
+               </font>
+            </Label>
+            <ComboBox fx:id="comboBoxVinylState" layoutX="156.0" layoutY="276.0" prefWidth="150.0" promptText="Selecciona el estado" />
+            <Separator layoutX="28.0" layoutY="331.0" opacity="0.3" prefHeight="3.0" prefWidth="421.0">
+               <opaqueInsets>
+                  <Insets />
+               </opaqueInsets>
+            </Separator>
+            <ComboBox fx:id="comboBoxVinylArtist" layoutX="156.0" layoutY="72.0" prefWidth="150.0" promptText="Selecciona el autor" />
+            <ComboBox fx:id="comboBoxVinylTittle" layoutX="156.0" layoutY="136.0" prefWidth="150.0" promptText="Selecciona el titulo" />
+            <ComboBox fx:id="comboBoxVinylStyle" layoutX="156.0" layoutY="208.0" prefWidth="150.0" promptText="Selecciona el estilo" />
+         </children>
+      </AnchorPane>
+      <AnchorPane fx:id="collectionPane" layoutX="20.0" layoutY="88.0" prefHeight="440.0" prefWidth="470.0" style="-fx-background-color: #2d3240;" AnchorPane.bottomAnchor="0.0" AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="0.0" AnchorPane.topAnchor="87.0">
+         <children>
+            <JFXListView fx:id="listViewAll" layoutX="14.0" layoutY="20.0" prefHeight="405.0" prefWidth="441.0" style="-fx-background-color: #2d3240;" AnchorPane.bottomAnchor="5.0" AnchorPane.leftAnchor="5.0" AnchorPane.rightAnchor="5.0" AnchorPane.topAnchor="5.0" />
+         </children></AnchorPane>
+      <ImageView fx:id="searchArrow" fitHeight="23.0" fitWidth="35.0" layoutX="115.0" layoutY="59.0" pickOnBounds="true" preserveRatio="true" visible="false">
+         <image>
+            <Image url="@images/icon_arrow.png" />
+         </image>
+      </ImageView>
+   </children>
+</AnchorPane>
