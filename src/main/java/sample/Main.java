@@ -5,6 +5,7 @@ import javafx.event.EventHandler;
 import javafx.fxml.FXMLLoader;
 import javafx.scene.Parent;
 import javafx.scene.Scene;
+import javafx.scene.image.Image;
 import javafx.scene.input.MouseEvent;
 import javafx.scene.paint.Color;
 import javafx.stage.Stage;
@@ -36,6 +37,7 @@ public class Main extends Application {
         });
         primaryStage.initStyle(StageStyle.TRANSPARENT);
         primaryStage.setTitle("Coleccion Vinilos");
+        primaryStage.getIcons().add(new Image("/images/icon.png"));
         Scene scene  = new Scene(root);
         scene.setFill(Color.TRANSPARENT);
         primaryStage.setScene(scene);

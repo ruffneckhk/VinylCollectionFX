@@ -62,6 +62,31 @@ public class MySQLite {
 
         String sql = "SELECT * FROM vinyls";
 
+        return getStrings(list, sql);
+    }
+
+    public ArrayList<String> selectAllByState(String selectedState) {
+        ArrayList<String> list = new ArrayList<>();
+        String sql = "SELECT * FROM vinyls WHERE state = " + selectedState;
+
+        return getStrings(list, sql);
+    }
+
+    public ArrayList<String> selectAllByAuthor(String selectedAuthor) {
+        ArrayList<String> list = new ArrayList<>();
+        String sql = "SELECT * FROM vinyls WHERE author = " + selectedAuthor;
+
+        return getStrings(list, sql);
+    }
+
+    public ArrayList<String> selectAllByStyle(String selectedStyle) {
+        ArrayList<String> list = new ArrayList<>();
+        String sql = "SELECT * FROM vinyls WHERE style = " + selectedStyle;
+
+        return getStrings(list, sql);
+    }
+
+    private ArrayList<String> getStrings(ArrayList<String> list, String sql) {
         try (Connection conn = connect();
              Statement stmt = conn.createStatement();
              ResultSet rs = stmt.executeQuery(sql)) {
@@ -69,6 +94,82 @@ public class MySQLite {
             while (rs.next()) {
                 list.add(rs.getString("id") + ". " + rs.getString("author") + " - " +
                         rs.getString("tittle") + "\n" + rs.getString("style") + "\n" + rs.getString("state"));
+            }
+        } catch (SQLException e) {
+            System.out.println(e.getMessage());
+        }
+        return list;
+    }
+
+    public ArrayList<String> selectAllAuthors() {
+
+        ArrayList<String> list = new ArrayList<>();
+
+        String sql = "SELECT author FROM vinyls GROUP BY author";
+
+        try (Connection conn = connect();
+             Statement stmt = conn.createStatement();
+             ResultSet rs = stmt.executeQuery(sql)) {
+            // loop through the result set
+            while (rs.next()) {
+                list.add(rs.getString("author"));
+            }
+        } catch (SQLException e) {
+            System.out.println(e.getMessage());
+        }
+        return list;
+    }
+
+    public ArrayList<String> selectAllTittles() {
+
+        ArrayList<String> list = new ArrayList<>();
+
+        String sql = "SELECT tittle FROM vinyls";
+
+        try (Connection conn = connect();
+             Statement stmt = conn.createStatement();
+             ResultSet rs = stmt.executeQuery(sql)) {
+            // loop through the result set
+            while (rs.next()) {
+                list.add(rs.getString("tittle"));
+            }
+        } catch (SQLException e) {
+            System.out.println(e.getMessage());
+        }
+        return list;
+    }
+
+    public ArrayList<String> selectAllStyles() {
+
+        ArrayList<String> list = new ArrayList<>();
+
+        String sql = "SELECT style FROM vinyls GROUP BY style";
+
+        try (Connection conn = connect();
+             Statement stmt = conn.createStatement();
+             ResultSet rs = stmt.executeQuery(sql)) {
+            // loop through the result set
+            while (rs.next()) {
+                list.add(rs.getString("style"));
+            }
+        } catch (SQLException e) {
+            System.out.println(e.getMessage());
+        }
+        return list;
+    }
+
+    public ArrayList<String> selectAllStates() {
+
+        ArrayList<String> list = new ArrayList<>();
+
+        String sql = "SELECT state FROM vinyls GROUP BY state";
+
+        try (Connection conn = connect();
+             Statement stmt = conn.createStatement();
+             ResultSet rs = stmt.executeQuery(sql)) {
+            // loop through the result set
+            while (rs.next()) {
+                list.add(rs.getString("state"));
             }
         } catch (SQLException e) {
             System.out.println(e.getMessage());

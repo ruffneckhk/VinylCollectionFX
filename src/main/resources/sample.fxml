@@ -112,30 +112,25 @@
                   <Font name="System Bold" size="16.0" />
                </font>
             </Label>
-            <Label layoutX="37.0" layoutY="136.0" text="Titulo:" textFill="WHITE">
+            <Label layoutX="39.0" layoutY="125.0" text="Estilo:" textFill="WHITE">
                <font>
                   <Font name="System Bold" size="16.0" />
                </font>
             </Label>
-            <Label layoutX="37.0" layoutY="208.0" text="Estilo:" textFill="WHITE">
+            <Label layoutX="34.0" layoutY="171.0" text="Estado:" textFill="WHITE">
                <font>
                   <Font name="System Bold" size="16.0" />
                </font>
             </Label>
-            <Label layoutX="38.0" layoutY="276.0" text="Estado:" textFill="WHITE">
-               <font>
-                  <Font name="System Bold" size="16.0" />
-               </font>
-            </Label>
-            <ComboBox fx:id="comboBoxVinylState" layoutX="156.0" layoutY="276.0" prefWidth="150.0" promptText="Selecciona el estado" />
+            <ComboBox fx:id="comboBoxVinylState" layoutX="156.0" layoutY="171.0" onAction="#onComboStatesChanges" prefWidth="150.0" promptText="Selecciona el estado" />
             <Separator layoutX="28.0" layoutY="331.0" opacity="0.3" prefHeight="3.0" prefWidth="421.0">
                <opaqueInsets>
                   <Insets />
                </opaqueInsets>
             </Separator>
-            <ComboBox fx:id="comboBoxVinylArtist" layoutX="156.0" layoutY="72.0" prefWidth="150.0" promptText="Selecciona el autor" />
-            <ComboBox fx:id="comboBoxVinylTittle" layoutX="156.0" layoutY="136.0" prefWidth="150.0" promptText="Selecciona el titulo" />
-            <ComboBox fx:id="comboBoxVinylStyle" layoutX="156.0" layoutY="208.0" prefWidth="150.0" promptText="Selecciona el estilo" />
+            <ComboBox fx:id="comboBoxVinylArtist" layoutX="156.0" layoutY="72.0" onAction="#onComboAuthorsChanges" prefWidth="150.0" promptText="Selecciona el autor" AnchorPane.bottomAnchor="343.0" AnchorPane.leftAnchor="156.0" AnchorPane.rightAnchor="164.0" AnchorPane.topAnchor="72.0" />
+            <ComboBox fx:id="comboBoxVinylStyle" layoutX="156.0" layoutY="125.0" onAction="#onComboStylesChanges" prefWidth="150.0" promptText="Selecciona el estilo" />
+            <Button layoutX="28.0" layoutY="360.0" mnemonicParsing="false" onMouseClicked="#onButtonSearchClick" text="Buscar" />
          </children>
       </AnchorPane>
       <AnchorPane fx:id="collectionPane" layoutX="20.0" layoutY="88.0" prefHeight="440.0" prefWidth="470.0" style="-fx-background-color: #2d3240;" AnchorPane.bottomAnchor="0.0" AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="0.0" AnchorPane.topAnchor="87.0">

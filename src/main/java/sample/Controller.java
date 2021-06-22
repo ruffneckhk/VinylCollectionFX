@@ -6,8 +6,10 @@ import com.jfoenix.controls.JFXTextField;
 import javafx.application.Platform;
 import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
+import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
 import javafx.fxml.Initializable;
+import javafx.scene.control.Alert;
 import javafx.scene.control.ComboBox;
 import javafx.scene.image.ImageView;
 import javafx.scene.input.MouseEvent;
@@ -40,8 +42,6 @@ public class Controller implements Initializable {
     @FXML
     private ComboBox<String> comboBoxVinylArtist;
     @FXML
-    private ComboBox<String> comboBoxVinylTittle;
-    @FXML
     private ComboBox<String> comboBoxVinylStyle;
     @FXML
     private ComboBox<String> comboBoxVinylState;
@@ -59,6 +59,10 @@ public class Controller implements Initializable {
     @FXML
     private JFXButton btnSave;
 
+    ObservableList<String> comboVinylArtistContent;
+    ObservableList<String> comboVinylTittleContent;
+    ObservableList<String> comboVinylStyleContent;
+
     //State combobox content
     ObservableList<String> comboStateContent =
             FXCollections.observableArrayList(
@@ -68,36 +72,14 @@ public class Controller implements Initializable {
                     "Muy usado"
             );
 
-    //Vinyl artist combobox content
-    //Hay que anadir un array con el contenido de la consulta de los artistas
-    //Add this ObservableList<String> list = FXCollections.observableArrayList(Arrays.toString(listOfCityData));
-    ObservableList<String> comboVinylArtistContent =
-            FXCollections.observableArrayList(
-                    "Artista"
-            );
-
-    //Vinyl tittle combobox content
-    //Hay que anadir un array con el contenido de la consulta de los titulos
-    //Add this ObservableList<String> list = FXCollections.observableArrayList(Arrays.toString(listOfCityData));
-    ObservableList<String> comboVinylTittleContent =
-            FXCollections.observableArrayList(
-                    "Titulo"
-            );
-
-    //Vinyl style combobox content
-    //Hay que anadir un array con el contenido de la consulta de los estilos
-    //Add this ObservableList<String> list = FXCollections.observableArrayList(Arrays.toString(listOfCityData));
-    ObservableList<String> comboVinylStyleContent =
-            FXCollections.observableArrayList(
-                    "Estilo"
-            );
 
     //Vinyl state combobox content
-    //Hay que anadir un array con el contenido de la consulta de los estados
-    //Add this ObservableList<String> list = FXCollections.observableArrayList(Arrays.toString(listOfCityData));
     ObservableList<String> comboVinylStateContent =
             FXCollections.observableArrayList(
-                    "Estado"
+                    "Nuevo",
+                    "Seminuevo",
+                    "Usado",
+                    "Muy usado"
             );
 
     @Override
@@ -107,12 +89,48 @@ public class Controller implements Initializable {
         sqLite.createNewTable();
         sqLite.selectAll();
         showAllCollection();
+        setComboAuthor();
+        setComboTittle();
+        setComboStyle();
 
         comboBoxState.setItems(comboStateContent);
         comboBoxVinylArtist.setItems(comboVinylArtistContent);
-        comboBoxVinylTittle.setItems(comboVinylTittleContent);
         comboBoxVinylStyle.setItems(comboVinylStyleContent);
         comboBoxVinylState.setItems(comboVinylStateContent);
+
+    }
+
+    //Vinyl artist combobox content
+    public void setComboAuthor() {
+        MySQLite sqLite = new MySQLite();
+        ArrayList<String> list = new ArrayList<>();
+        list = sqLite.selectAllAuthors();
+        comboVinylArtistContent =
+                FXCollections.observableArrayList(
+                        list
+                );
+    }
+
+    //Vinyl tittle combobox content
+    public void setComboTittle() {
+        MySQLite sqLite = new MySQLite();
+        ArrayList<String> list = new ArrayList<>();
+        list = sqLite.selectAllTittles();
+        comboVinylTittleContent =
+                FXCollections.observableArrayList(
+                        list
+                );
+    }
+
+    //Vinyl style combobox content
+    public void setComboStyle() {
+        MySQLite sqLite = new MySQLite();
+        ArrayList<String> list = new ArrayList<>();
+        list = sqLite.selectAllStyles();
+        comboVinylStyleContent =
+                FXCollections.observableArrayList(
+                        list
+                );
     }
 
     //Exit button
@@ -139,6 +157,11 @@ public class Controller implements Initializable {
 
         searchPane.setVisible(false);
         searchArrow.setVisible(false);
+
+        txtAuthor.setText("");
+        txtStyle.setText("");
+        txtTittle.setText("");
+
 
     }
 
@@ -187,8 +210,32 @@ public class Controller implements Initializable {
     }
 
     public void insertVinyl(MouseEvent event) {
-        MySQLite sqLite = new MySQLite();
-        sqLite.insert(txtAuthor.getText(), txtTittle.getText(), txtStyle.getText(), comboBoxState.getSelectionModel().getSelectedItem());
+        if (txtAuthor.getText().isEmpty()&&txtTittle.getText().isEmpty()&&txtStyle.getText().isEmpty()&&comboBoxState.getSelectionModel().isEmpty()) {
+            Alert alert = new Alert(Alert.AlertType.INFORMATION);
+            alert.setTitle("Guardar Disco");
+            alert.setContentText("Rellene todos los campos");
+            alert.showAndWait();
+        } else {
+            MySQLite sqLite = new MySQLite();
+            sqLite.insert(txtAuthor.getText(), txtTittle.getText(), txtStyle.getText(), comboBoxState.getSelectionModel().getSelectedItem());
+        }
+
+    }
+
+    public void onButtonSearchClick(MouseEvent event) {
+        //Set collection pane and collection arrow visible
+        collectionPane.setVisible(true);
+        collectionArrow.setVisible(true);
+
+        //Set other panels and arrows invisible
+        newVinylPane.setVisible(false);
+        newVinylArrow.setVisible(false);
+
+        searchPane.setVisible(false);
+        searchArrow.setVisible(false);
+
+        listViewAll.getItems().clear();
+        showAllCollectionSearch();
     }
 
     private void showAllCollection() {
@@ -199,8 +246,44 @@ public class Controller implements Initializable {
         listViewAll.getItems().addAll(list);
     }
 
-/*    public void onComboAuthorsChanges(ActionEvent event) {
-        int i = this.comboBoxVinylArtist.getSelectionModel().getSelectedIndex();
-        this.com
-    }*/
+    private void showAllCollectionSearch() {
+        String selected = "";
+        if(comboBoxVinylArtist.isDisable()&&comboBoxVinylStyle.isDisable()) {
+            selected = "'" + comboBoxVinylState.getValue() + "'";
+            MySQLite sqLite = new MySQLite();
+            ArrayList<String> list;
+            list = sqLite.selectAllByState(selected);
+            listViewAll.getItems().addAll(list);
+        } else if (comboBoxVinylState.isDisable()&&comboBoxVinylStyle.isDisable()){
+            selected = "'" + comboBoxVinylArtist.getValue() + "'";
+            MySQLite sqLite = new MySQLite();
+            ArrayList<String> list;
+            list = sqLite.selectAllByAuthor(selected);
+            listViewAll.getItems().addAll(list);
+        } else {
+            selected = "'" + comboBoxVinylStyle.getValue() + "'";
+            MySQLite sqLite = new MySQLite();
+            ArrayList<String> list;
+            list = sqLite.selectAllByStyle(selected);
+            listViewAll.getItems().addAll(list);
+        }
+        comboBoxVinylArtist.setDisable(false);
+        comboBoxVinylState.setDisable(false);
+        comboBoxVinylStyle.setDisable(false);
+    }
+
+    public void onComboAuthorsChanges(ActionEvent event) {
+        comboBoxVinylState.setDisable(true);
+        comboBoxVinylStyle.setDisable(true);
+    }
+
+    public void onComboStylesChanges(ActionEvent event) {
+        comboBoxVinylState.setDisable(true);
+        comboBoxVinylArtist.setDisable(true);
+    }
+
+    public void onComboStatesChanges(ActionEvent event) {
+        comboBoxVinylArtist.setDisable(true);
+        comboBoxVinylStyle.setDisable(true);
+    }
 }
