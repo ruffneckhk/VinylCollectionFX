@@ -135,7 +135,8 @@
       </AnchorPane>
       <AnchorPane fx:id="collectionPane" layoutX="20.0" layoutY="88.0" prefHeight="440.0" prefWidth="470.0" style="-fx-background-color: #2d3240;" AnchorPane.bottomAnchor="0.0" AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="0.0" AnchorPane.topAnchor="87.0">
          <children>
-            <JFXListView fx:id="listViewAll" layoutX="14.0" layoutY="20.0" prefHeight="405.0" prefWidth="441.0" style="-fx-background-color: #2d3240;" AnchorPane.bottomAnchor="5.0" AnchorPane.leftAnchor="5.0" AnchorPane.rightAnchor="5.0" AnchorPane.topAnchor="5.0" />
+            <JFXListView fx:id="listViewAll" layoutX="14.0" layoutY="20.0" prefHeight="374.0" prefWidth="460.0" style="-fx-background-color: #2d3240;" AnchorPane.bottomAnchor="61.0" AnchorPane.leftAnchor="5.0" AnchorPane.rightAnchor="5.0" AnchorPane.topAnchor="5.0" />
+            <Button layoutX="14.0" layoutY="395.0" mnemonicParsing="false" onMouseClicked="#onListViewClick" text="Eliminar" />
          </children></AnchorPane>
       <ImageView fx:id="searchArrow" fitHeight="23.0" fitWidth="35.0" layoutX="115.0" layoutY="59.0" pickOnBounds="true" preserveRatio="true" visible="false">
          <image>

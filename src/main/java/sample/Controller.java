@@ -59,6 +59,9 @@ public class Controller implements Initializable {
     @FXML
     private JFXButton btnSave;
 
+    @FXML
+    private JFXButton btnDelete;
+
     ObservableList<String> comboVinylArtistContent;
     ObservableList<String> comboVinylTittleContent;
     ObservableList<String> comboVinylStyleContent;
@@ -92,6 +95,7 @@ public class Controller implements Initializable {
         setComboAuthor();
         setComboTittle();
         setComboStyle();
+
 
         comboBoxState.setItems(comboStateContent);
         comboBoxVinylArtist.setItems(comboVinylArtistContent);
@@ -210,7 +214,7 @@ public class Controller implements Initializable {
     }
 
     public void insertVinyl(MouseEvent event) {
-        if (txtAuthor.getText().isEmpty()&&txtTittle.getText().isEmpty()&&txtStyle.getText().isEmpty()&&comboBoxState.getSelectionModel().isEmpty()) {
+        if (txtAuthor.getText().isEmpty() && txtTittle.getText().isEmpty() && txtStyle.getText().isEmpty() && comboBoxState.getSelectionModel().isEmpty()) {
             Alert alert = new Alert(Alert.AlertType.INFORMATION);
             alert.setTitle("Guardar Disco");
             alert.setContentText("Rellene todos los campos");
@@ -248,13 +252,13 @@ public class Controller implements Initializable {
 
     private void showAllCollectionSearch() {
         String selected = "";
-        if(comboBoxVinylArtist.isDisable()&&comboBoxVinylStyle.isDisable()) {
+        if (comboBoxVinylArtist.isDisable() && comboBoxVinylStyle.isDisable()) {
             selected = "'" + comboBoxVinylState.getValue() + "'";
             MySQLite sqLite = new MySQLite();
             ArrayList<String> list;
             list = sqLite.selectAllByState(selected);
             listViewAll.getItems().addAll(list);
-        } else if (comboBoxVinylState.isDisable()&&comboBoxVinylStyle.isDisable()){
+        } else if (comboBoxVinylState.isDisable() && comboBoxVinylStyle.isDisable()) {
             selected = "'" + comboBoxVinylArtist.getValue() + "'";
             MySQLite sqLite = new MySQLite();
             ArrayList<String> list;
@@ -285,5 +289,16 @@ public class Controller implements Initializable {
     public void onComboStatesChanges(ActionEvent event) {
         comboBoxVinylArtist.setDisable(true);
         comboBoxVinylStyle.setDisable(true);
+    }
+
+    //Cambiar a getIdOnListViewClick
+    public void onListViewClick() {
+        String selected = listViewAll.getSelectionModel().getSelectedItem();
+        int pointPosition = selected.indexOf('.');
+        String stringId = selected.substring(0, pointPosition);
+        int id = Integer.parseInt(stringId);
+        MySQLite sqLite = new MySQLite();
+        sqLite.delete(id);
+        System.out.println(stringId);
     }
 }

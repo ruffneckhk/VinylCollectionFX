@@ -130,4 +130,5 @@ public class Vinyl {
     public void setState(String state) {
         State = state;
     }
+
 }

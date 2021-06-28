@@ -194,7 +194,7 @@ public class MySQLite {
         }
     }
 
-    public static void delete(int id) {
+    public void delete(int id) {
         String sql = "DELETE FROM vinyls WHERE id = ?";
 
         try (Connection conn = connect();
