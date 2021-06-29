@@ -11,7 +11,6 @@ import javafx.scene.control.Alert;
 import javafx.scene.control.ComboBox;
 import javafx.scene.control.Label;
 import javafx.scene.image.ImageView;
-import javafx.scene.input.MouseEvent;
 import javafx.scene.layout.AnchorPane;
 
 import java.net.URL;
@@ -25,15 +24,11 @@ public class Controller implements Initializable {
     @FXML
     private ImageView collectionArrow;
     @FXML
-    private ImageView exitArrow;
-    @FXML
     private ImageView searchArrow;
     @FXML
     private ImageView imageUpdate;
     @FXML
     private ImageView imageSave;
-    @FXML
-    private ImageView newVinyl;
     @FXML
     private AnchorPane newVinylPane;
     @FXML
@@ -106,7 +101,7 @@ public class Controller implements Initializable {
     //Vinyl artist combobox content
     public void setComboAuthor() {
         MySQLite sqLite = new MySQLite();
-        ArrayList<String> list = new ArrayList<>();
+        ArrayList<String> list;
         list = sqLite.selectAllAuthors();
         comboVinylArtistContent =
                 FXCollections.observableArrayList(
@@ -117,7 +112,7 @@ public class Controller implements Initializable {
     //Vinyl tittle combobox content
     public void setComboTittle() {
         MySQLite sqLite = new MySQLite();
-        ArrayList<String> list = new ArrayList<>();
+        ArrayList<String> list;
         list = sqLite.selectAllTittles();
         comboVinylTittleContent =
                 FXCollections.observableArrayList(
@@ -128,7 +123,7 @@ public class Controller implements Initializable {
     //Vinyl style combobox content
     public void setComboStyle() {
         MySQLite sqLite = new MySQLite();
-        ArrayList<String> list = new ArrayList<>();
+        ArrayList<String> list;
         list = sqLite.selectAllStyles();
         comboVinylStyleContent =
                 FXCollections.observableArrayList(
@@ -137,13 +132,13 @@ public class Controller implements Initializable {
     }
 
     //Exit button
-    public void onExitButtonClicked(MouseEvent event) {
+    public void onExitButtonClicked() {
         Platform.exit();
         System.exit(0);
     }
 
     //Add new vinyl button
-    public void onNewVinylButtonClicked(MouseEvent event) {
+    public void onNewVinylButtonClicked() {
         //On double click set pane invisible
         if (newVinylPane.isVisible()) {
             newVinylPane.setVisible(false);
@@ -170,7 +165,7 @@ public class Controller implements Initializable {
     }
 
     //View collection
-    public void onCollectionButtonClicked(MouseEvent event) {
+    public void onCollectionButtonClicked() {
         //On double click set pane invisible
         if (collectionPane.isVisible()) {
             collectionPane.setVisible(false);
@@ -194,7 +189,7 @@ public class Controller implements Initializable {
     }
 
     //View searchCollection
-    public void onSearchButtonClicked(MouseEvent event) {
+    public void onSearchButtonClicked() {
         //On double click set pane invisible
         if (searchPane.isVisible()) {
             searchPane.setVisible(false);
@@ -226,7 +221,7 @@ public class Controller implements Initializable {
         comboBoxVinylState.setItems(comboVinylStateContent);
     }
 
-    public void insertVinyl(MouseEvent event) {
+    public void insertVinyl() {
         if (txtAuthor.getText().isEmpty() && txtTittle.getText().isEmpty() && txtStyle.getText().isEmpty() && comboBoxState.getSelectionModel().isEmpty()) {
             Alert alert = new Alert(Alert.AlertType.INFORMATION);
             alert.setTitle("Guardar Disco");
@@ -248,7 +243,7 @@ public class Controller implements Initializable {
 
     }
 
-    public void updateVinyl(MouseEvent event) {
+    public void updateVinyl() {
         if (txtAuthor.getText().isEmpty() && txtTittle.getText().isEmpty() && txtStyle.getText().isEmpty() && comboBoxState.getSelectionModel().isEmpty()) {
             Alert alert = new Alert(Alert.AlertType.INFORMATION);
             alert.setTitle("Actualizar Disco");
@@ -267,7 +262,7 @@ public class Controller implements Initializable {
         }
     }
 
-    public void onButtonSearchClick(MouseEvent event) {
+    public void onButtonSearchClick() {
         //Set collection pane and collection arrow visible
         collectionPane.setVisible(true);
         collectionArrow.setVisible(true);
@@ -292,7 +287,7 @@ public class Controller implements Initializable {
     }
 
     private void showAllCollectionSearch() {
-        String selected = "";
+        String selected;
         if (comboBoxVinylArtist.isDisable() && comboBoxVinylStyle.isDisable()) {
             selected = "'" + comboBoxVinylState.getValue() + "'";
             MySQLite sqLite = new MySQLite();
