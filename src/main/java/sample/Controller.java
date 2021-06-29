@@ -96,7 +96,6 @@ public class Controller implements Initializable {
         setComboTittle();
         setComboStyle();
 
-
         comboBoxState.setItems(comboStateContent);
         comboBoxVinylArtist.setItems(comboVinylArtistContent);
         comboBoxVinylStyle.setItems(comboVinylStyleContent);
@@ -168,8 +167,6 @@ public class Controller implements Initializable {
 
         imageUpdate.setVisible(false);
         imageSave.setVisible(true);
-
-
     }
 
     //View collection
@@ -214,6 +211,19 @@ public class Controller implements Initializable {
 
         collectionPane.setVisible(false);
         collectionArrow.setVisible(false);
+
+        MySQLite sqLite = new MySQLite();
+        sqLite.selectAll();
+
+        showAllCollection();
+        setComboAuthor();
+        setComboTittle();
+        setComboStyle();
+
+        comboBoxState.setItems(comboStateContent);
+        comboBoxVinylArtist.setItems(comboVinylArtistContent);
+        comboBoxVinylStyle.setItems(comboVinylStyleContent);
+        comboBoxVinylState.setItems(comboVinylStateContent);
     }
 
     public void insertVinyl(MouseEvent event) {
@@ -231,6 +241,9 @@ public class Controller implements Initializable {
             listViewAll.getItems().clear();
 
             showAllCollection();
+            setComboAuthor();
+            setComboTittle();
+            setComboStyle();
         }
 
     }
