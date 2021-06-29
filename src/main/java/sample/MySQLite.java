@@ -1,7 +1,5 @@
 package sample;
 
-import javafx.scene.control.ListView;
-
 import java.sql.*;
 import java.util.ArrayList;
 
@@ -84,6 +82,30 @@ public class MySQLite {
         String sql = "SELECT * FROM vinyls WHERE style = " + selectedStyle;
 
         return getStrings(list, sql);
+    }
+
+    public Vinyl selectById(int id) {
+
+        String sql = "SELECT * FROM vinyls WHERE id = " + id;
+        String author = "";
+        String tittle = "";
+        String style = "";
+        String state = "";
+
+        try (Connection conn = connect();
+             Statement stmt = conn.createStatement();
+             ResultSet rs = stmt.executeQuery(sql)) {
+            // loop through the result set
+            while (rs.next()) {
+                author = rs.getString("author");
+                tittle = rs.getString("tittle");
+                style = rs.getString("style");
+                state = rs.getString("state");
+            }
+        } catch (SQLException e) {
+            System.out.println(e.getMessage());
+        }
+        return new Vinyl(author, tittle, style, state);
     }
 
     private ArrayList<String> getStrings(ArrayList<String> list, String sql) {
@@ -177,18 +199,25 @@ public class MySQLite {
         return list;
     }
 
-    public static void update(int id, String name) {
-        String sql = "UPDATE vinyls SET name = ? "
-                + "WHERE id = ?";
+    public void update(int id, String author, String tittle, String style, String state) {
+
+        String sql = "UPDATE vinyls SET author = ? , "
+                + "tittle = ? ,"
+                + "style = ? ,"
+                + " state = ? " +
+                "WHERE id = ?";
 
         try (Connection conn = connect();
-             PreparedStatement pstmt = conn.prepareStatement(sql)) {
+             PreparedStatement stmt = conn.prepareStatement(sql)) {
 
             // set the corresponding param
-            pstmt.setString(1, name);
-            pstmt.setInt(2, id);
+            stmt.setString(1, author);
+            stmt.setString(2, tittle);
+            stmt.setString(3, style);
+            stmt.setString(4, state);
+            stmt.setInt(5, id);
             // update
-            pstmt.executeUpdate();
+            stmt.executeUpdate();
         } catch (SQLException e) {
             System.out.println(e.getMessage());
         }

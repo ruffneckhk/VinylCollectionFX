@@ -27,7 +27,7 @@
                         <Insets left="15.0" top="15.0" />
                      </HBox.margin>
                   </ImageView>
-                  <ImageView fitHeight="35.0" fitWidth="35.0" onMouseClicked="#onNewVinylButtonClicked" pickOnBounds="true" preserveRatio="true">
+                  <ImageView fx:id="imgNewVinyl" fitHeight="35.0" fitWidth="35.0" onMouseClicked="#onNewVinylButtonClicked" pickOnBounds="true" preserveRatio="true">
                      <image>
                         <Image url="@images/icon_vinyl.png" />
                      </image>
@@ -87,7 +87,17 @@
                   <Insets />
                </opaqueInsets>
             </Separator>
-            <Button layoutX="38.0" layoutY="369.0" mnemonicParsing="false" onMouseClicked="#insertVinyl" prefHeight="25.0" prefWidth="122.0" text="Guardar" />
+            <ImageView fx:id="imageSave" fitHeight="35.0" fitWidth="35.0" layoutX="105.0" layoutY="400.0" onMouseClicked="#insertVinyl" pickOnBounds="true" preserveRatio="true" AnchorPane.bottomAnchor="15.0" AnchorPane.leftAnchor="420.0" AnchorPane.rightAnchor="15.0" AnchorPane.topAnchor="390.0">
+               <image>
+                  <Image url="@images/icon_save.png" />
+               </image>
+            </ImageView>
+            <ImageView fx:id="imageUpdate" fitHeight="35.0" fitWidth="35.0" layoutX="370.0" layoutY="390.0" onMouseClicked="#updateVinyl" pickOnBounds="true" preserveRatio="true" visible="false" AnchorPane.bottomAnchor="15.0" AnchorPane.leftAnchor="420.0" AnchorPane.rightAnchor="15.0" AnchorPane.topAnchor="390.0">
+               <image>
+                  <Image url="@images/icon_save.png" />
+               </image>
+            </ImageView>
+            <Label fx:id="idLabel" layoutX="48.0" layoutY="33.0" text="Label" visible="false" />
          </children>
       </AnchorPane>
       <ImageView fx:id="newVinylArrow" fitHeight="23.0" fitWidth="35.0" layoutX="64.0" layoutY="59.0" pickOnBounds="true" preserveRatio="true" visible="false">
@@ -122,21 +132,30 @@
                   <Font name="System Bold" size="16.0" />
                </font>
             </Label>
-            <ComboBox fx:id="comboBoxVinylState" layoutX="156.0" layoutY="171.0" onAction="#onComboStatesChanges" prefWidth="150.0" promptText="Selecciona el estado" />
+            <ComboBox fx:id="comboBoxVinylState" layoutX="156.0" layoutY="171.0" onMouseClicked="#onComboStatesChanges" prefWidth="150.0" promptText="Selecciona el estado" />
             <Separator layoutX="28.0" layoutY="331.0" opacity="0.3" prefHeight="3.0" prefWidth="421.0">
                <opaqueInsets>
                   <Insets />
                </opaqueInsets>
             </Separator>
-            <ComboBox fx:id="comboBoxVinylArtist" layoutX="156.0" layoutY="72.0" onAction="#onComboAuthorsChanges" prefWidth="150.0" promptText="Selecciona el autor" AnchorPane.bottomAnchor="343.0" AnchorPane.leftAnchor="156.0" AnchorPane.rightAnchor="164.0" AnchorPane.topAnchor="72.0" />
-            <ComboBox fx:id="comboBoxVinylStyle" layoutX="156.0" layoutY="125.0" onAction="#onComboStylesChanges" prefWidth="150.0" promptText="Selecciona el estilo" />
+            <ComboBox fx:id="comboBoxVinylArtist" layoutX="156.0" layoutY="72.0" onMouseClicked="#onComboAuthorsChanges" prefWidth="150.0" promptText="Selecciona el autor" AnchorPane.bottomAnchor="343.0" AnchorPane.leftAnchor="156.0" AnchorPane.rightAnchor="164.0" AnchorPane.topAnchor="72.0" />
+            <ComboBox fx:id="comboBoxVinylStyle" layoutX="156.0" layoutY="125.0" onMouseClicked="#onComboStylesChanges" prefWidth="150.0" promptText="Selecciona el estilo" />
             <Button layoutX="28.0" layoutY="360.0" mnemonicParsing="false" onMouseClicked="#onButtonSearchClick" text="Buscar" />
          </children>
       </AnchorPane>
       <AnchorPane fx:id="collectionPane" layoutX="20.0" layoutY="88.0" prefHeight="440.0" prefWidth="470.0" style="-fx-background-color: #2d3240;" AnchorPane.bottomAnchor="0.0" AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="0.0" AnchorPane.topAnchor="87.0">
          <children>
             <JFXListView fx:id="listViewAll" layoutX="14.0" layoutY="20.0" prefHeight="374.0" prefWidth="460.0" style="-fx-background-color: #2d3240;" AnchorPane.bottomAnchor="61.0" AnchorPane.leftAnchor="5.0" AnchorPane.rightAnchor="5.0" AnchorPane.topAnchor="5.0" />
-            <Button layoutX="14.0" layoutY="395.0" mnemonicParsing="false" onMouseClicked="#onListViewClick" text="Eliminar" />
+            <ImageView fitHeight="35.0" fitWidth="35.0" layoutX="54.0" layoutY="390.0" onMouseClicked="#onListViewClick" pickOnBounds="true" preserveRatio="true" AnchorPane.bottomAnchor="15.0" AnchorPane.leftAnchor="420.0" AnchorPane.rightAnchor="15.0">
+               <image>
+                  <Image url="@images/icon_delete.png" />
+               </image>
+            </ImageView>
+            <ImageView fitHeight="35.0" fitWidth="35.0" layoutX="95.0" layoutY="390.0" onMouseClicked="#sendToUpdateFromList" pickOnBounds="true" preserveRatio="true" AnchorPane.rightAnchor="60.0">
+               <image>
+                  <Image url="@images/icon_update.png" />
+               </image>
+            </ImageView>
          </children></AnchorPane>
       <ImageView fx:id="searchArrow" fitHeight="23.0" fitWidth="35.0" layoutX="115.0" layoutY="59.0" pickOnBounds="true" preserveRatio="true" visible="false">
          <image>

@@ -1,16 +1,15 @@
 package sample;
 
-import com.jfoenix.controls.JFXButton;
 import com.jfoenix.controls.JFXListView;
 import com.jfoenix.controls.JFXTextField;
 import javafx.application.Platform;
 import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
-import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
 import javafx.fxml.Initializable;
 import javafx.scene.control.Alert;
 import javafx.scene.control.ComboBox;
+import javafx.scene.control.Label;
 import javafx.scene.image.ImageView;
 import javafx.scene.input.MouseEvent;
 import javafx.scene.layout.AnchorPane;
@@ -29,7 +28,12 @@ public class Controller implements Initializable {
     private ImageView exitArrow;
     @FXML
     private ImageView searchArrow;
-
+    @FXML
+    private ImageView imageUpdate;
+    @FXML
+    private ImageView imageSave;
+    @FXML
+    private ImageView newVinyl;
     @FXML
     private AnchorPane newVinylPane;
     @FXML
@@ -52,15 +56,11 @@ public class Controller implements Initializable {
     private JFXTextField txtTittle;
     @FXML
     private JFXTextField txtStyle;
+    @FXML
+    private Label idLabel;
 
     @FXML
     private JFXListView<String> listViewAll;
-
-    @FXML
-    private JFXButton btnSave;
-
-    @FXML
-    private JFXButton btnDelete;
 
     ObservableList<String> comboVinylArtistContent;
     ObservableList<String> comboVinylTittleContent;
@@ -166,6 +166,9 @@ public class Controller implements Initializable {
         txtStyle.setText("");
         txtTittle.setText("");
 
+        imageUpdate.setVisible(false);
+        imageSave.setVisible(true);
+
 
     }
 
@@ -222,8 +225,33 @@ public class Controller implements Initializable {
         } else {
             MySQLite sqLite = new MySQLite();
             sqLite.insert(txtAuthor.getText(), txtTittle.getText(), txtStyle.getText(), comboBoxState.getSelectionModel().getSelectedItem());
+            newVinylPane.setVisible(false);
+            collectionPane.setVisible(true);
+
+            listViewAll.getItems().clear();
+
+            showAllCollection();
         }
 
+    }
+
+    public void updateVinyl(MouseEvent event) {
+        if (txtAuthor.getText().isEmpty() && txtTittle.getText().isEmpty() && txtStyle.getText().isEmpty() && comboBoxState.getSelectionModel().isEmpty()) {
+            Alert alert = new Alert(Alert.AlertType.INFORMATION);
+            alert.setTitle("Actualizar Disco");
+            alert.setContentText("Rellene todos los campos");
+            alert.showAndWait();
+        } else {
+            MySQLite sqLite = new MySQLite();
+            sqLite.update(Integer.parseInt(idLabel.getText()),txtAuthor.getText(), txtTittle.getText(), txtStyle.getText(), comboBoxState.getSelectionModel().getSelectedItem());
+
+            newVinylPane.setVisible(false);
+            collectionPane.setVisible(true);
+
+            listViewAll.getItems().clear();
+
+            showAllCollection();
+        }
     }
 
     public void onButtonSearchClick(MouseEvent event) {
@@ -271,34 +299,82 @@ public class Controller implements Initializable {
             list = sqLite.selectAllByStyle(selected);
             listViewAll.getItems().addAll(list);
         }
-        comboBoxVinylArtist.setDisable(false);
         comboBoxVinylState.setDisable(false);
         comboBoxVinylStyle.setDisable(false);
+        comboBoxVinylArtist.setDisable(false);
+
+        comboBoxVinylArtist.getSelectionModel().clearSelection();
+        comboBoxVinylStyle.getSelectionModel().clearSelection();
+        comboBoxVinylState.getSelectionModel().clearSelection();
     }
 
-    public void onComboAuthorsChanges(ActionEvent event) {
+    public void onComboAuthorsChanges() {
         comboBoxVinylState.setDisable(true);
         comboBoxVinylStyle.setDisable(true);
     }
 
-    public void onComboStylesChanges(ActionEvent event) {
+    public void onComboStylesChanges() {
         comboBoxVinylState.setDisable(true);
         comboBoxVinylArtist.setDisable(true);
     }
 
-    public void onComboStatesChanges(ActionEvent event) {
+    public void onComboStatesChanges() {
         comboBoxVinylArtist.setDisable(true);
         comboBoxVinylStyle.setDisable(true);
     }
 
-    //Cambiar a getIdOnListViewClick
     public void onListViewClick() {
-        String selected = listViewAll.getSelectionModel().getSelectedItem();
-        int pointPosition = selected.indexOf('.');
-        String stringId = selected.substring(0, pointPosition);
-        int id = Integer.parseInt(stringId);
-        MySQLite sqLite = new MySQLite();
-        sqLite.delete(id);
-        System.out.println(stringId);
+
+        if (!listViewAll.getSelectionModel().isEmpty()) {
+            String selected = listViewAll.getSelectionModel().getSelectedItem();
+            int pointPosition = selected.indexOf('.');
+            String stringId = selected.substring(0, pointPosition);
+            int id = Integer.parseInt(stringId);
+            MySQLite sqLite = new MySQLite();
+            sqLite.delete(id);
+
+            listViewAll.getItems().clear();
+            ArrayList<String> list;
+            list = sqLite.selectAll();
+            listViewAll.getItems().addAll(list);
+        }
+
+
+    }
+
+    public void sendToUpdateFromList() {
+
+        if (!listViewAll.getSelectionModel().isEmpty()) {
+            String selected = listViewAll.getSelectionModel().getSelectedItem();
+            int pointPosition = selected.indexOf('.');
+            String stringId = selected.substring(0, pointPosition);
+            int id = Integer.parseInt(stringId);
+            MySQLite sqLite = new MySQLite();
+
+            Vinyl vinyl;
+            vinyl = sqLite.selectById(id);
+
+            System.out.println(selected);
+
+            txtAuthor.setText(vinyl.getAuthor());
+            txtTittle.setText(vinyl.getTittle());
+            txtStyle.setText(vinyl.getStyle());
+            idLabel.setText(String.valueOf(id));
+
+            imageSave.setVisible(false);
+            imageUpdate.setVisible(true);
+
+            //Set new vinyl pane and new vinyl arrow visible
+            newVinylPane.setVisible(true);
+            newVinylArrow.setVisible(true);
+
+            //Set other panels and arrows invisible
+            collectionPane.setVisible(false);
+            collectionArrow.setVisible(false);
+
+            searchPane.setVisible(false);
+            searchArrow.setVisible(false);
+
+        }
     }
 }
