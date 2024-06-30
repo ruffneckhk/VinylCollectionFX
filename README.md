@@ -1,2 +1,2 @@
 # VinylCollectionFX
-A vinyl collection app made in JavaFX with SQLite database.
+Aplicacion de escritorio para coleccion de vinilos creada en JavaFX con SQLite database.
