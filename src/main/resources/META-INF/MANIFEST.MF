@@ -1,2 +1,2 @@
-main-Class: sample.Main
+main-Class: VinylCollection.Main
 

@@ -1,4 +1,6 @@
-package sample;
+package VinylCollection.db;
+
+import VinylCollection.dao.Vinyl;
 
 import java.sql.*;
 import java.util.ArrayList;

@@ -1,5 +1,7 @@
-package sample;
+package VinylCollection.controller;
 
+import VinylCollection.db.MySQLite;
+import VinylCollection.dao.Vinyl;
 import com.jfoenix.controls.JFXListView;
 import com.jfoenix.controls.JFXTextField;
 import javafx.application.Platform;
@@ -18,6 +20,12 @@ import java.util.ResourceBundle;
 
 public class Controller implements Initializable {
 
+    @FXML
+    public AnchorPane userPane;
+    @FXML
+    public ImageView imgNewVinyl;
+    @FXML
+    public ImageView exitArrow;
     @FXML
     private ImageView newVinylArrow;
     @FXML
